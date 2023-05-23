@@ -34,11 +34,13 @@ public class TelegramBot extends TelegramLongPollingBot {
                 case "/start":
                     startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
                     break;
+                case ".":
+                    sendMessage(chatId,",");
+                    break;
                 default:
                     sendMessage(chatId, "");
             }
         }
-
     }
 
     private void startCommandReceived(Long chatId, String name) {
