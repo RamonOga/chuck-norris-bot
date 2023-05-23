@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.example</groupId>
-    <artifactId>simple-telegram-bot</artifactId>
+    <artifactId>chat-telegram-bot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>simple-telegram-bot</name>
-    <description>Simple Telegram Bot</description>
+    <name>chat-telegram-bot</name>
+    <description>Chat Telegram Bot</description>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -81,7 +81,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>ru.example.SimpleTelegramBotApplication</mainClass>
+                            <mainClass>ru.example.ChatTelegramBotApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
