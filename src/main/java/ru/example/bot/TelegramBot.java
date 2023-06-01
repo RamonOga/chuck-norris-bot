@@ -1,5 +1,6 @@
 package ru.example.bot;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.example.config.BotConfig;
 import lombok.AllArgsConstructor;
 
@@ -8,11 +9,14 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.example.model.UpdateDtoFactory;
 
 @Component
 @AllArgsConstructor
 public class TelegramBot extends TelegramLongPollingBot {
     private final BotConfig botConfig;
+    private final UpdateDtoFactory updateDtoFactory;
+
 
     @Override
     public String getBotUsername() {
@@ -29,6 +33,8 @@ public class TelegramBot extends TelegramLongPollingBot {
         if(update.hasMessage() && update.getMessage().hasText()){
             String messageText = update.getMessage().getText();
             long chatId = update.getMessage().getChatId();
+
+            System.out.println(updateDtoFactory.getUpdateDto(update));
 
             switch (messageText){
                 case "/start":
@@ -55,7 +61,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
-
+            System.out.printf("Произошла ошибка: %s", e.getMessage());
         }
     }
 }
