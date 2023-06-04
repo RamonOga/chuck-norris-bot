@@ -1,6 +1,7 @@
 package ru.example.bot;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.example.config.BotConfig;
 import lombok.AllArgsConstructor;
 
@@ -16,6 +17,7 @@ import ru.example.model.UpdateDtoFactory;
 public class TelegramBot extends TelegramLongPollingBot {
     private final BotConfig botConfig;
     private final UpdateDtoFactory updateDtoFactory;
+    private final Logger logger = LoggerFactory.getLogger(TelegramBot.class);
 
 
     @Override
@@ -33,9 +35,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         if(update.hasMessage() && update.getMessage().hasText()){
             String messageText = update.getMessage().getText();
             long chatId = update.getMessage().getChatId();
-
-            System.out.println(updateDtoFactory.getUpdateDto(update));
-
+            logger.info(String.format("Update received: %s", updateDtoFactory.getUpdateDto(update)));
             switch (messageText){
                 case "/start":
                     startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
@@ -43,8 +43,9 @@ public class TelegramBot extends TelegramLongPollingBot {
                 case ".":
                     sendMessage(chatId,",");
                     break;
-                default:
-                    sendMessage(chatId, "");
+                case ",":
+                    sendMessage(chatId,"");
+                    break;
             }
         }
     }
@@ -60,8 +61,9 @@ public class TelegramBot extends TelegramLongPollingBot {
                 .text(textToSend).build();
         try {
             execute(sendMessage);
+            logger.info(String.format("Message sent: %s", sendMessage.getText()));
         } catch (TelegramApiException e) {
-            System.out.printf("Произошла ошибка: %s", e.getMessage());
+            logger.error("Shit happened!!!", e);
         }
     }
 }
