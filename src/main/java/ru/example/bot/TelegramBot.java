@@ -2,6 +2,7 @@ package ru.example.bot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.example.api.TelegramBotUpdateHandler;
 import ru.example.api.TelegramBotUpdateRequest;
 import ru.example.config.BotConfig;
@@ -37,15 +38,18 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (update.hasMessage() && update.getMessage().hasText()) {
-            UpdateDto updateDto = updateDtoFactory.getUpdateDto(update);
-            TelegramBotUpdateRequest request = TelegramBotUpdateRequest.builder()
-                    .update(updateDto)
-                    .build();
-            Answer answer = handler.send(request)
-                    .getAnswer();
-            if (!answer.isEmpty()) {
-                sendMessage(answer);
+        if (update.hasMessage()) {
+            Message message = update.getMessage();
+            if ( message.hasText()|| message.hasPhoto() || message.hasVideo()) {
+                UpdateDto updateDto = updateDtoFactory.getUpdateDto(update);
+                TelegramBotUpdateRequest request = TelegramBotUpdateRequest.builder()
+                        .update(updateDto)
+                        .build();
+                Answer answer = handler.send(request)
+                        .getAnswer();
+                if (!answer.isEmpty()) {
+                    sendMessage(answer);
+                }
             }
         }
     }

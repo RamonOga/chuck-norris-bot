@@ -1,27 +1,23 @@
 package ru.example.model;
 
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Chat;
-import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.User;
-import ru.example.model.dto.ChatDto;
-import ru.example.model.dto.MessageDto;
-import ru.example.model.dto.UpdateDto;
-import ru.example.model.dto.UserDto;
+import org.telegram.telegrambots.meta.api.objects.*;
+import ru.example.model.dto.*;
 
 @Component
 public class UpdateDtoFactory {
+
     public UpdateDto getUpdateDto(Update telegramUpdate) {
         UserDto userDto = getUserDto(telegramUpdate.getMessage().getFrom());
         ChatDto chatDto = getChatDto(telegramUpdate.getMessage().getChat());
         Message telegramMessage = telegramUpdate.getMessage();
-        MessageDto messageDto = MessageDto.builder()
+        MessageDto messageDto = fillMessageContent(telegramMessage, MessageDto.builder())
                 .id(telegramMessage.getMessageId())
                 .from(userDto).date(telegramMessage.getDate())
                 .chat(chatDto)
-                .text(telegramMessage.getText())
+                .caption(telegramMessage.getCaption())
                 .build();
+
 
         return UpdateDto.builder()
                 .message(messageDto)
@@ -43,5 +39,45 @@ public class UpdateDtoFactory {
         return ChatDto.builder()
                 .id(telegramChatModel.getId())
                 .type(telegramChatModel.getType()).build();
+    }
+
+    private MessageDto.MessageDtoBuilder fillMessageContent(Message telegramMessage, MessageDto.MessageDtoBuilder builder) {
+        if (telegramMessage.getPhoto() != null) {
+            return builder.photo(getPhoto(telegramMessage))
+                    .messageType(MessageType.PHOTO);
+        }
+        if (telegramMessage.getVideo() != null) {
+            return builder.video(getVideo(telegramMessage))
+                    .messageType(MessageType.VIDEO);
+        }
+        return builder.text(telegramMessage.getText())
+                .messageType(MessageType.TEXT);
+    }
+
+    private PhotoDto getPhoto(Message telegramMessage) {
+        PhotoSize photoSize = telegramMessage.getPhoto().get(3);
+        return PhotoDto.builder()
+                .id(photoSize.getFileId())
+                .fileUniqueId(photoSize.getFileUniqueId())
+                .width(photoSize.getWidth())
+                .height(photoSize.getHeight())
+                .fileSize(photoSize.getFileSize())
+                .filePath(photoSize.getFilePath())
+                .build();
+    }
+
+    private VideoDto getVideo(Message telegramMessage) {
+        Video video = telegramMessage.getVideo();
+        return VideoDto.builder()
+                .id(video.getFileId())
+                .fileUniqueId(video.getFileUniqueId())
+                .width(video.getWidth())
+                .height(video.getHeight())
+                .duration(video.getDuration())
+                .thumb(video.getThumb())
+                .mimeType(video.getMimeType())
+                .fileSize(video.getFileSize())
+                .fileName(video.getFileName())
+                .build();
     }
 }

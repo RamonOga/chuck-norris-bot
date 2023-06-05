@@ -13,5 +13,8 @@ public class MessageDto {
     private final Integer date;
     private final ChatDto chat;
     private final String text;
-
+    private final PhotoDto photo;
+    private final VideoDto video;
+    private final String caption;
+    private final MessageType messageType;
 }
