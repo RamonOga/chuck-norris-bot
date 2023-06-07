@@ -43,19 +43,18 @@ public class UpdateDtoFactory {
 
     private MessageDto.MessageDtoBuilder fillMessageContent(Message telegramMessage, MessageDto.MessageDtoBuilder builder) {
         if (telegramMessage.getPhoto() != null) {
-            return builder.photo(getPhoto(telegramMessage))
+            return builder.photo(getPhoto(telegramMessage.getPhoto().get(3)))
                     .messageType(MessageType.PHOTO);
         }
         if (telegramMessage.getVideo() != null) {
-            return builder.video(getVideo(telegramMessage))
+            return builder.video(getVideo(telegramMessage.getVideo()))
                     .messageType(MessageType.VIDEO);
         }
         return builder.text(telegramMessage.getText())
                 .messageType(MessageType.TEXT);
     }
 
-    private PhotoDto getPhoto(Message telegramMessage) {
-        PhotoSize photoSize = telegramMessage.getPhoto().get(3);
+    private PhotoDto getPhoto(PhotoSize photoSize) {
         return PhotoDto.builder()
                 .id(photoSize.getFileId())
                 .fileUniqueId(photoSize.getFileUniqueId())
@@ -66,15 +65,14 @@ public class UpdateDtoFactory {
                 .build();
     }
 
-    private VideoDto getVideo(Message telegramMessage) {
-        Video video = telegramMessage.getVideo();
+    private VideoDto getVideo(Video video) {
         return VideoDto.builder()
                 .id(video.getFileId())
                 .fileUniqueId(video.getFileUniqueId())
                 .width(video.getWidth())
                 .height(video.getHeight())
                 .duration(video.getDuration())
-                .thumb(video.getThumb())
+                .thumb(getPhoto(video.getThumb()))
                 .mimeType(video.getMimeType())
                 .fileSize(video.getFileSize())
                 .fileName(video.getFileName())

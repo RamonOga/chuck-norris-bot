@@ -1,0 +1,1 @@
+DROP TABLE users, chat, photo, video, messages cascade;

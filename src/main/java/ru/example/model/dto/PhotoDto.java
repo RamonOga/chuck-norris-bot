@@ -12,5 +12,10 @@ public class PhotoDto {
     private final Integer height;
     private final Integer fileSize;
     private final String filePath;
+    private byte[] bytes;
+
+    public void setBytes(byte[] bytes) {
+        this.bytes = bytes;
+    }
 }
 
