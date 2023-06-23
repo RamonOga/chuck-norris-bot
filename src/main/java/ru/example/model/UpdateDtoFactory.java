@@ -28,9 +28,9 @@ public class UpdateDtoFactory {
     private UserDto getUserDto(User telegramUser) {
         return UserDto.builder()
                 .id(telegramUser.getId())
-                .first_name(telegramUser.getFirstName())
-                .last_name(telegramUser.getLastName())
-                .is_bot(telegramUser.getIsBot())
+                .firstName(telegramUser.getFirstName())
+                .lastName(telegramUser.getLastName())
+                .isBot(telegramUser.getIsBot())
                 .username(telegramUser.getUserName())
                 .build();
     }

@@ -11,7 +11,7 @@ CREATE TABLE users
 CREATE TABLE chat
 (
     id          SERIAL PRIMARY KEY,
-    charId      BIGINT NOT NULL,
+    chatId      BIGINT NOT NULL,
     messageType VARCHAR(100)
 );
 

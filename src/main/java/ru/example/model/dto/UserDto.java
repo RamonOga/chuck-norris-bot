@@ -9,8 +9,8 @@ import lombok.ToString;
 @ToString
 public class UserDto {
     private final Long id;
-    private final String first_name;
-    private final Boolean is_bot;
-    private final String last_name;
+    private final String firstName;
+    private final Boolean isBot;
+    private final String lastName;
     private final String username;
 }

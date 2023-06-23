@@ -1,4 +1,4 @@
-package ru.example.config;
+package ru.example.bot.config;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,4 +13,7 @@ public class BotConfig {
     String botName;
     @Value("${bot.token}")
     String token;
+    @Value("${hibernate.dialect}")
+    private String postgreDialect;
+
 }

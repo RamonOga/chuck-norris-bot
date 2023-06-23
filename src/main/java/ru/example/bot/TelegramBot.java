@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.GetFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.example.api.TelegramBotUpdateHandler;
 import ru.example.api.TelegramBotUpdateRequest;
-import ru.example.config.BotConfig;
+import ru.example.bot.config.BotConfig;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;

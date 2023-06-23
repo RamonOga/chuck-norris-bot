@@ -1,4 +1,4 @@
-package ru.example.config;
+package ru.example.bot.config;
 
 import ru.example.bot.TelegramBot;
 import org.springframework.beans.factory.annotation.Autowired;
