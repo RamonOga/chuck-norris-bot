@@ -1,26 +1,24 @@
 package ru.example.api;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.example.jpa.repositories.MessageRepository;
 import ru.example.model.Answer;
 import ru.example.model.dto.MessageDto;
 import ru.example.model.dto.MessageType;
+import ru.example.sevices.IMessageSaver;
 
 @Service
+@AllArgsConstructor
 public class TelegramBotUpdateHandlerImpl implements TelegramBotUpdateHandler {
 
-    private final MessageRepository messageRepository;
-
-    @Autowired
-    public TelegramBotUpdateHandlerImpl(MessageRepository messageRepository) {
-        this.messageRepository = messageRepository;
-    }
+    private final IMessageSaver messageSaver;
 
     @Override
     public TelegramBotUpdateResponse send(TelegramBotUpdateRequest request) {
         MessageDto messageDto = request.getUpdate().getMessage();
-        messageRepository.add(messageDto);
+        messageSaver.save(messageDto);
         return TelegramBotUpdateResponse.builder().answer(fillAnswer(Answer.builder(), messageDto)).build();
     }
 

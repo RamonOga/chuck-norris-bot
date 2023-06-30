@@ -17,5 +17,4 @@ public class UserEntity {
     private Boolean isBot;
     private String lastName;
     private String userName;
-
 }

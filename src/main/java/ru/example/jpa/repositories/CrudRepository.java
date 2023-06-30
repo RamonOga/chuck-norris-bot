@@ -4,8 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import ru.example.bot.config.HibernateConf;
+import ru.example.jpa.config.HibernateConf;
 
 import java.util.function.Function;
 
@@ -23,7 +22,7 @@ public abstract class CrudRepository {
             transaction = session.beginTransaction();
             T rsl = command.apply(session);
             transaction.commit();
-            logger.info("Записали некоторо говно");
+            logger.info("Записали некоторое говно");
             return rsl;
         } catch (Exception e) {
             if (transaction != null) {

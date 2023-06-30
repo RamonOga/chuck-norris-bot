@@ -1,19 +1,15 @@
-package ru.example.bot.config;
+package ru.example.jpa.config;
 
 import jakarta.annotation.PostConstruct;
-import lombok.Data;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.AvailableSettings;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-import ru.example.jpa.config.BotConfigg;
 
 import java.util.Properties;
 

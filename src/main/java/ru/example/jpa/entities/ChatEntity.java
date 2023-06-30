@@ -16,5 +16,4 @@ public class ChatEntity {
     private long chatId;
     @Column(name = "messageType")
     private String messageType;
-
 }
