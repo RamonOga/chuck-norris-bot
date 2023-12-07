@@ -3,9 +3,9 @@ package ru.example.jpa.config;
 import jakarta.annotation.PostConstruct;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -32,8 +32,6 @@ public class HibernateConf {
     private String postgreShowSQL;
     @Value("${hibernate.hbm2ddl}")
     private String postgreHdm2ddl;
-    @Value("${bot.name}")
-    String botName;
 
     private SessionFactory sessionFactory;
 
@@ -41,14 +39,20 @@ public class HibernateConf {
     public SessionFactory init() {
         try {
             if (sessionFactory == null) {
-                StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
-                        .configure()
+                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                        .applySettings(this.getHibernateProperties())
                         .build();
-
-                sessionFactory = new MetadataSources(standardRegistry).buildMetadata().buildSessionFactory();
+                sessionFactory = new MetadataSources(serviceRegistry)
+                        .addAnnotatedClassName("ru.example.jpa.entities.UserEntity")
+                        .addAnnotatedClassName("ru.example.jpa.entities.MessageEntity")
+                        .addAnnotatedClassName("ru.example.jpa.entities.ChatEntity")
+                        .buildMetadata()
+                        .buildSessionFactory();
             }
+
             return sessionFactory;
-        } catch (Throwable ex) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
             throw new ExceptionInInitializerError(ex);
         }
     }
@@ -73,6 +77,4 @@ public class HibernateConf {
     public void shutdown() {
         getSessionFactory().close();
     }
-
-
 }

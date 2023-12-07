@@ -13,7 +13,4 @@ public class BotConfig {
     String botName;
     @Value("${bot.token}")
     String token;
-    @Value("${hibernate.dialect}")
-    private String postgreDialect;
-
 }
