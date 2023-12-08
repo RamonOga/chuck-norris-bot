@@ -8,11 +8,11 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
 @EntityScan(basePackages = {"ru.example.jpa.entities"})
-public class ChatTelegramBotApplication {
-    private static final Logger logger = LoggerFactory.getLogger(ChatTelegramBotApplication.class);
+public class ChuckNorrisBotApplication {
+    private static final Logger logger = LoggerFactory.getLogger(ChuckNorrisBotApplication.class);
     public static void main(String[] args) {
         logger.info("application started");
-        SpringApplication.run(ChatTelegramBotApplication.class, args);
+        SpringApplication.run(ChuckNorrisBotApplication.class, args);
 
     }
 }

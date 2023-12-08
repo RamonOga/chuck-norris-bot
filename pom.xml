@@ -2,17 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.example</groupId>
-    <artifactId>chat-telegram-bot</artifactId>
+    <groupId>ru.example</groupId>
+    <artifactId>chuck-norris-bot</artifactId>
     <version>${app.version}</version>
-    <name>chat-telegram-bot</name>
-    <description>Chat Telegram Bot</description>
+    <name>chuck-norris-bot</name>
+    <description>Chuck Norris Bot</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <java.version>17</java.version>
-        <app.version>0.1.12</app.version>
+        <app.version>0.0.1</app.version>
 
         <!-- VARIABLES -->
         <springboot.version>3.1.0</springboot.version>
@@ -100,10 +100,10 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <finalName>chat-bot-v${app.version}</finalName>
+                            <finalName>chuck-norris-bot-v${app.version}</finalName>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ru.example.ChatTelegramBotApplication</mainClass>
+                                    <mainClass>ru.example.ChuckNorrisBotApplication</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
